@@ -1,0 +1,361 @@
+getwd()
+setwd("chèn địa chỉ vùng dữ liệu cần làm việc ")
+# Đọc dữ liệu 
+  install.packages("readr")
+  library(readr)
+  dirty_data <- read_csv("chèn địa chỉ của file csv vào")
+  View(dirty_data)
+  missing_data <- read_csv("chèn địa chỉ của file csv vào")
+  View(missing_data)
+  warehouses <- read_csv("chèn địa chỉ của file csv vào")
+  View(warehouses)
+  
+# Kiểm tra xem có dữ liệu bị khuyết nào không, nếu có thì in ra màn hình 
+  data_missing1 <- colSums(is.na(dirty_data))
+  if (any(is.na(dirty_data))) {
+    print(data_missing1)
+  } else {
+    print("Không có dữ liệu nào bị thiếu ở dirty_data")
+  }
+  
+  data_missing2 <- colSums(is.na(missing_data))
+  if (any(is.na(missing_data))) {
+    print(data_missing2)
+  } else {
+    print("Không có dữ liệu nào bị thiếu ở missing_data")
+  }
+  
+# Kiểm tra xem dữ liệu bị khuyết ở hàng nào 
+  missing_data_address <- apply(is.na(missing_data),2,which)
+  print(missing_data_address)
+  
+  miss <- missing_data # tạo 1 bản sao của missing_data để dữ liệu gốc sẽ không bị tác động khi fill data vào 
+  
+#Khôi phục dữ liệu của biến season bị mất trong missing_data
+  install.packages("dplyr")
+  install.packages("lubridate")
+  library(dplyr)
+  library(lubridate)
+  
+  #chuyển định dạng dữ liệu của biến "date" thành Date sau đó in ra màn hình để kiểm tra 
+  miss$date <- mdy(miss$date) 
+  print(class(miss$date))
+  
+#Phục hồi dữ liệu của biến season dựa vào biến date 
+  sample1 <- filter(miss,is.na(season)) #tạo data frame sample1 là những dữ liệu thiếu trong season ở miss
+  sample1 <- sample1 %>% 
+  rowwise() %>%
+  mutate(season = case_when(
+      lubridate::month(date) %in% c(1, 2, 12) ~ "Summer",
+      lubridate::month(date) %in% c(3, 4, 5) ~ "Autumn",
+      lubridate::month(date) %in% c(6, 7, 8) ~ "Winter",
+      lubridate::month(date) %in% c(9, 10, 11) ~ "Spring",
+    ))
+  print(sample1) # kiểm tra xem dữ liệu đã được phục hồi ở sample1 chưa 
+
+  #nạp dữ liệu đã được phục hồi của biến season từ sample vào miss
+  miss <- miss %>%
+  left_join(sample1 %>% select(order_id, season), by = "order_id") %>%
+  mutate(season = coalesce(season.x, season.y))%>%
+  select(-season.x, -season.y)  
+  
+#Khôi phục dữ liệu của biến nearest_warehouses bị mất trong missing_data
+  install.packages("geosphere")
+  library(geosphere)
+  sample2 <- filter(miss,is.na(nearest_warehouse)) #tạo sample2 bao gồm những hàng chứa những dữ liệu bị khuyết của biến nearest_house
+  #Tính khoảng cách giữa các khách hàng đến kho Nickolsom
+  {sample2 <- sample2 %>%
+    rowwise() %>%
+    mutate(distanceNickolsom = distVincentySphere(c(customer_long, customer_lat), c(144.9696, -37.81860)))
+  #Tính khoảng cách giữa các khách hàng đến kho Thompson
+  sample2 <- sample2 %>%
+    rowwise() %>%
+    mutate(distanceThompson = distVincentySphere(c(customer_long, customer_lat), c(144.9471, -37.81267)))
+  #Tính khoảng cách giữa các khách hàng đến kho Bakers
+  sample2 <- sample2 %>%
+    rowwise() %>%
+    mutate(distanceBakers = distVincentySphere(c(customer_long, customer_lat), c(144.9952, -37.81000)))
+  }
+  #Chuyển đơn vị từ m sang km
+  for (index in 1:length(sample2$nearest_warehouse)) {
+    sample2$distanceThompson[index] <- sample2$distanceThompson[index] / 1000
+    sample2$distanceNickolsom[index] <- sample2$distanceNickolsom[index] / 1000
+    sample2$distanceBakers[index] <- sample2$distanceBakers[index] / 1000
+  }
+  View(sample2)
+  #Tìm khoảng cách nhỏ nhất giữa 3 kho đến khách hàng sau đó gán giá trị min vào biến nearest_house trong sample2
+  for (index in 1 :length(sample2$nearest_warehouse))
+  {if (min(sample2$distanceThompson[index],sample2$distanceNickolsom[index],sample2$distanceBakers[index])== sample2$distanceThompson[index])
+    {sample2$nearest_warehouse[index]='Thompson' }
+  if (min(sample2$distanceThompson[index],sample2$distanceNickolsom[index],sample2$distanceBakers[index])== sample2$distanceNickolsom[index])
+    {sample2$nearest_warehouse[index]='Nickolsom' }
+  if (min(sample2$distanceThompson[index],sample2$distanceNickolsom[index],sample2$distanceBakers[index])== sample2$distanceBakers[index])
+  {sample2$nearest_warehouse[index]='Bakers' }}
+  #Nạp dữ liệu đã phục hồi từ sample2 vào miss
+  miss <- miss %>%
+  left_join(sample2 %>% select(order_id, nearest_warehouse), by = "order_id") %>%
+  mutate(nearest_warehouse = coalesce(nearest_warehouse.x,nearest_warehouse.y))%>%
+  select(-nearest_warehouse.x, -nearest_warehouse.y)
+  
+#Khôi phục dữ liệu của biến distance_to_nearest_warehouse bị mất trong missing_data
+  sample3 <- filter(miss,is.na(distance_to_nearest_warehouse))
+  #Tính khoảng cách giữa các khách hàng đến kho Nickolsom
+  {sample3 <- sample3 %>%
+  rowwise() %>%
+  mutate(distanceNickolsom = distVincentySphere(c(customer_long, customer_lat), c(144.9696, -37.81860)))
+  #Tính khoảng cách giữa các khách hàng đến kho Thompson
+  sample3 <- sample3 %>%
+  rowwise() %>%
+  mutate(distanceThompson = distVincentySphere(c(customer_long, customer_lat), c(144.9471, -37.81267)))
+  #Tính khoảng cách giữa các khách hàng đến kho Bakers
+  sample3 <- sample3 %>%
+  rowwise() %>%
+  mutate(distanceBakers = distVincentySphere(c(customer_long, customer_lat), c(144.9952, -37.81000)))
+  }
+  #Chuyển đơn vị từ m sang km
+  for (index in 1:length(sample2$nearest_warehouse)) {
+    sample3$distanceThompson[index] <- sample3$distanceThompson[index] / 1000
+    sample3$distanceNickolsom[index] <- sample3$distanceNickolsom[index] / 1000
+    sample3$distanceBakers[index] <- sample3$distanceBakers[index] / 1000
+  }
+  #Tìm giá trị nhỏ nhất giữa 3 khoảng cách 
+  for (index in 1 :length(sample3$distance_to_nearest_warehouse))
+  { (sample3$distance_to_nearest_warehouse[index]<-min(sample3$distanceThompson[index],sample3$distanceNickolsom[index],sample3$distanceBakers[index]))}
+  #Nạp dữ liệu đã phục hồi từ sample3 vào miss
+  miss <- miss %>%
+  left_join(sample3 %>% select(order_id, distance_to_nearest_warehouse), by = "order_id") %>%
+  mutate(distance_to_nearest_warehouse = coalesce(distance_to_nearest_warehouse.x,distance_to_nearest_warehouse.y))%>%
+  select(-distance_to_nearest_warehouse.x, -distance_to_nearest_warehouse.y)
+  
+#Khôi phục dữ liệu của biến customer_lat bị mất trong missing_data
+  sample4 <- filter(miss,is.na(customer_lat))
+  #tính toán vĩ độ dựa vào công thức ngược Haversine  rồi gán vào cột customer_lat của sample4
+  for (index in 1:length(sample4$order_id))
+  {if (sample4$nearest_warehouse[index]=="Thompson")
+    {
+    sample4$customer_lat[index]<- asin(sin((-37.8126732)*pi/180)*cos((sample4$distance_to_nearest_warehouse[index])/6371)
+                                       +cos((-37.8126732)*pi/180)*sin((sample4$distance_to_nearest_warehouse[index])/6371)*cos((sample4$customer_long[index])*pi/180-(144.9470689)*pi/180))
+    sample4$customer_lat[index] <- (sample4$customer_lat[index])*180/(pi)
+    }
+  if (sample4$nearest_warehouse[index]=="Nickolson")
+    {
+      sample4$customer_lat[index]<- asin(sin((-37.818595)*pi/180)*cos((sample4$distance_to_nearest_warehouse[index])/6371)
+                                         +cos((-37.818595)*pi/180)*sin((sample4$distance_to_nearest_warehouse[index])/6371)*cos((sample4$customer_long[index])*pi/180-(144.969551)*pi/180))
+      sample4$customer_lat[index] <- (sample4$customer_lat[index])*180/(pi)
+    }
+  if (sample4$nearest_warehouse[index]=="Bakers")
+    {
+      sample4$customer_lat[index]<- asin(sin((-37.8099961)*pi/180)*cos((sample4$distance_to_nearest_warehouse[index])/6371)
+                                         +cos((-37.8099961)*pi/180)*sin((sample4$distance_to_nearest_warehouse[index])/6371)*cos((sample4$customer_long[index])*pi/180-(144.99523200000002)*pi/180))
+      sample4$customer_lat[index] <- (sample4$customer_lat[index])*180/(pi)
+    }
+  }
+  #Nạp dữ liệu đã phục hồi từ sample4 vào miss
+  miss <- miss %>%
+    left_join(sample4 %>% select(order_id, customer_lat), by = "order_id") %>%
+    mutate(customer_lat = coalesce(customer_lat.x,customer_lat.y))%>%
+    select(-customer_lat.x, -customer_lat.y)
+
+#Khôi phục dữ liệu của biến customer_long bị mất trong missing_data
+  sample5 <- filter(miss, is.na(customer_long))
+  #tính toán kinh độ dựa vào công thức ngược Haversine  rồi gán vào cột customer_long của sample5
+  for (index in 1:length(sample5$order_id))
+  { if (sample5$nearest_warehouse[index]=="Thompson")
+  { denta <- 2*asin(sqrt(sin((-37.8126732-sample5$customer_lat[index])/2)^2+cos(sample5$customer_lat[index])*cos(-37.8126732)*sin((sample5$distance_to_nearest_warehouse[index])*2*pi/(2*360))^2))
+  sample5$customer_long[index]<- 144.9470689 - denta
+  
+  }
+    if (sample5$nearest_warehouse[index]=="Nickolson")
+    {
+      denta <- 2*asin(sqrt(sin((-37.818595-sample5$customer_lat[index])/2)^2+cos(sample5$customer_lat[index])*cos(-37.818595)*sin((sample5$distance_to_nearest_warehouse[index])*2*pi/(2*360))^2))
+      sample5$customer_long[index]<- 144.9695510 -denta
+      
+    }
+    
+    if (sample5$nearest_warehouse[index]=="Bakers")
+    {
+      denta <- 2*asin(sqrt(sin((-37.8099961-sample5$customer_lat[index])/2)^2+cos(sample5$customer_lat[index])*cos(-37.8099961)*sin((sample5$distance_to_nearest_warehouse[index])*2*pi/(2*360))^2))    
+      sample5$customer_long[index]<- 144.99523200000002 - denta
+    }}   
+  #Nạp dữ liệu đã phục hồi từ sample5 vào miss
+  miss <- miss %>%
+    left_join(sample5 %>% select(order_id, customer_long), by = "order_id") %>%
+    mutate(customer_long = coalesce(customer_long.x,customer_long.y))%>%
+    select(-customer_long.x, -customer_long.y)
+
+#Khôi phục dữ liệu của biến order_total bị mất trong missing_data
+  sample6 <- filter(miss, is.na(order_total))
+  for (index in 1:length(sample6$order_id))
+  {
+    sample6$order_total[index]<- sample6$order_price[index]-(sample6$order_price[index]*sample6$coupon_discount[index])/100+sample6$delivery_charges[index]}
+  #Nạp dữ liệu đã phục hồi từ sample6 vào miss
+  miss <- miss %>%
+    left_join(sample6 %>% select(order_id, order_total), by = "order_id") %>%
+    mutate(order_total = coalesce(order_total.x,order_total.y))%>%
+    select(-order_total.x, -order_total.y)
+#Khôi phục dữ liệu của biến order_price bị mất trong missing_data
+  sample7 <- filter(miss, is.na(order_price))
+  for (index in 1:length(sample7$order_id))
+  {
+    sample7$order_price[index]<-(sample7$order_total[index]-sample7$delivery_charges[index])/(1-sample7$coupon_discount[index]/100)}
+  #Nạp dữ liệu đã phục hồi từ sample6 vào miss
+  miss <- miss %>%
+    left_join(sample7 %>% select(order_id, order_price), by = "order_id") %>%
+    mutate(order_price = coalesce(order_price.x,order_price.y))%>%
+    select(-order_price.x, -order_price.y)
+  
+#Khôi phục dữ liệu của biến is_happy_customer bị mất trong missing_data
+  sample8=filter(miss,is.na(is_happy_customer))
+  sample8$is_happy_customer[1]= TRUE
+  sample8$is_happy_customer[3]= TRUE
+  sample8$is_happy_customer[5:10]= TRUE
+  sample8$is_happy_customer[2]= FALSE
+  sample8$is_happy_customer[4]= FALSE
+  #Nạp dữ liệu đã phục hồi từ sample6 vào miss
+  miss <- miss %>%
+    left_join(sample8 %>% select(order_id,is_happy_customer ), by = "order_id") %>%
+    mutate(is_happy_customer = coalesce(is_happy_customer.x,is_happy_customer.y))%>%
+    select(-is_happy_customer.x, -is_happy_customer.y)
+
+#làm sạch dữ liệu
+  dirty <-dirty_data #tạo 1 bản sao của dirty_data để dữ liệu gốc sẽ không bị tác động khi làm việc
+  #Kiểm tra các tên nhà kho liệu có phải là duy nhất
+  unique = unique(dirty$nearest_warehouse) 
+  unique 
+  #Điều chỉnh lại các giá trị (in hoa chữ cái đầu)
+  install.packages("stringr")
+  library(stringr)
+  dirty$nearest_warehouse <- str_to_title(dirty$nearest_warehouse) 
+  unique = unique(dirty$nearest_warehouse)
+  unique
+  
+  #Kiểm tra các mùa liệu có phải là duy nhất
+  unique1 = unique(dirty$season) 
+  unique1
+  
+  
+  #Điều chỉnh lại các giá trị (in hoa chữ cái đầu)
+  dirty$season <- str_to_title(dirty$season) 
+  unique1 = unique(dirty$season)
+  unique1
+  #Tạo thêm 1 cột mới order_total_new
+  dirty=
+    dirty %>%
+    rowwise() %>%
+    mutate(order_total_new= order_price + delivery_charges - order_price*(delivery_charges/100) )
+  #Kiểm tra số lượng dữ liệu khác nhau giữa 2 cột
+  different=length(unique(dirty$order_total[ dirty$order_total != dirty$order_total_new] ))
+  different
+  
+  #Gán các giá trị của 'order_total_new' vào 'order_total'
+  dirty$order_total <- dirty$order_total_new
+  dirty$order_total_new =NULL #xóa order_total_new
+  
+  #Kiểm tra xem kiểu định dạng của biến date
+  sapply(dirty, class) # nhận thấy kiểu định dạng của biến date là Character
+  #Chỉnh lại kiểu định dạng của biến date là Date
+  dirty$date <- ymd(dirty$date)
+  print(class(dirty$date))
+  
+#Lọc ra các biến cần thiết
+  filtered_data <- dirty[, c("nearest_warehouse", "coupon_discount", "order_total", "delivery_charges","season", "is_expedited_delivery", "distance_to_nearest_warehouse", "is_happy_customer")]
+  View(filtered)
+#làm rõ dữ liệu 
+  summary(filtered_data)
+# làm rõ lượt hài lòng và không hài lòng của khách 
+  table(filtered_data[,"is_happy_customer"])
+  ###########################################################################
+#Kiểm tra xem tổng chi phí đơn hàng của các kho có tuân theo phân phối chuẩn hay không
+  Bakers_data_1 <- subset(filtered_data,filtered_data$nearest_warehouse=="Bakers")
+  qqnorm(Bakers_data_1$order_total)
+  qqline(Bakers_data_1$order_total)
+  shapiro.test(Bakers_data_1$order_total)
+
+  Nickolson_data_1 <- subset(filtered_data,filtered_data$nearest_warehouse=="Nickolson")
+  qqnorm(Nickolson_data_1$order_total)
+  qqline(Nickolson_data_1$order_total)
+  shapiro.test(Nickolson_data_1$order_total)
+
+  Thompson_data_1 <- subset(filtered_data,filtered_data$nearest_warehouse=="Thompson")
+  qqnorm(Thompson_data_1$order_total)
+  qqline(Thompson_data_1$order_total)
+  shapiro.test(Thompson_data_1$order_total)
+
+#kiểm định Levene để nhận thấy sụ biến động giữa các nhóm
+  install.packages("car")
+  library(car)
+  leveneTest(order_total ~ nearest_warehouse, data = filtered_data)
+
+#Thực hiện phân tích phương sai 1 nhân tô 
+  anova_mode_1 <- aov(order_total~nearest_warehouse,data=filtered_data)
+  summary(anova_mode_1)
+
+#Kiểm tra tổng chi phí đặt hàng ở các kho hàng theo mùa có tuân theo phân phối chuẩn hay không 
+  Spring_data <- subset(filtered_data, filtered_data$season=="Spring")
+  qqnorm(Spring_data$order_total)
+  qqline(Spring_data$order_total)
+  shapiro.test(Spring_data$order_total)
+
+  Summer_data <- subset(filtered_data, filtered_data$season=="Spring")
+  qqnorm(Summer_data$order_total)
+  qqline(Summer_data$order_total)
+  shapiro.test(Spring_data$order_total)
+
+  Autumn_data <- subset(filtered_data, filtered_data$season=="Spring")
+  qqnorm(Autumn_data$order_total)
+  qqline(Autumn_data$order_total)
+  shapiro.test(Autumn_data$order_total)
+
+  Winter_data <- subset(filtered_data, filtered_data$season=="Spring")
+  qqnorm(Winter_data$order_total)
+  qqline(Winter_data$order_total)
+  shapiro.test(Winter_data$order_total)
+
+#kiểm định Levene để nhận thấy sụ biến động giữa các nhóm
+  leveneTest(order_total ~ as.factor(season), data = filtered_data)
+
+#Thực hiện phân tích phương sai 1 nhân tô 
+  anova_mode_2 <- aov(order_total~season,data=filtered_data)
+  summary(anova_mode_1)
+
+#Lập bảng tần số giữa các biến
+  xtabs(~nearest_warehouse+is_happy_customer,data=filtered_data)
+  table <- xtabs(~nearest_warehouse+is_happy_customer,data=filtered_data)
+  chisq.test(table) #kiểm định chisq độc lập giữa các biến
+
+#Lập ma trận dự kiến các tần số kì vọng
+  chisq.test(table)$expected
+
+  new_data <- filtered_data
+  head(new_data,10)
+
+#Chia bộ dữ liệu thành 2 phần : train data và test data
+  set.seed(123)
+  train.rows <- sample(rownames(new_data), dim(new_data)[1]*0.8)
+  train_data <- new_data[train.rows, ]
+  test.rows  <- setdiff(rownames(new_data), train.rows)
+  test_data  <- new_data[test.rows, ]
+
+#Thực hiện mô hình hồi quy logistic
+  model <- glm(is_happy_customer ~ ., family = "binomial", data = train_data)
+  research <- step(model)
+
+#xây dựng mô hình decision tree
+  install.packages("rpart")
+  install.packages("rpart.plot")
+  library(rpart)
+  library(rpart.plot)
+  fit <- rpart(is_happy_customer~.,data= train_data,method = 'class')
+  rpart.plot(fit,extra=106)
+
+#thực hiện dự báo
+  test_data$predicted <-predict(fit, test_data, type= 'class')
+  head(test_data,10)
+
+#lập bảng so sánh quan sát và thực tế
+  Observation <-table(test_data$is_happy_customer)
+  predicted_value <-table(test_data$predicted)
+  rbind(Observation, predicted_value)
+
+
+

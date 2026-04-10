@@ -1,0 +1,213 @@
+\documentclass[12pt,a4paper, twoside]{article}
+\usepackage[utf8]{vietnam}
+\usepackage[top = 2cm, bottom = 2cm, left = 1.8cm, right = 1.8cm]{geometry}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{indentfirst,enumitem}
+\usepackage{graphicx}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{scrextend}
+\usepackage{comment}
+\usepackage{soul}
+\usepackage{tikz, tkz-tab}
+\usepackage{lscape}
+\usepackage{float, lscape}
+\usepackage{fancyhdr}
+\usepackage{tcolorbox}
+\usepackage{titling}
+\usepackage{import}
+\usepackage{titlesec}
+\usepackage{color}
+\usepackage{empheq}
+\pagestyle{fancy}
+\usepackage{tocloft}
+\usepackage{float}
+\usepackage{placeins}
+\addtolength{\cftsecnumwidth}{0.8em}
+
+
+%\changefontsizes{13pt}
+\renewcommand\thesection{\Roman{section}}
+\renewcommand\thesubsection{\arabic{subsection}}
+%\renewcommand\thesubsubsection{\arabic{subsection}.\arabic{subsubsection}}
+
+\def\mathrlap{\mathpalette\mathrlapinternal} 
+\def\mathclap{\mathpalette\mathclapinternal}
+\def\mathllapinternal#1#2{\llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
+
+%CHÈN ẢNH
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\usetikzlibrary[patterns]
+
+\author{VŨ NHẬT HUY}
+\date{1/11/2023}
+\usepackage{tikz,tkz-tab}
+
+%New colors defined below
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backgroundColour}{rgb}{0.95,0.95,0.92}
+
+%Code listing style named "mystyle"
+\lstdefinestyle{mystyle}{
+  language=R,
+  basicstyle=\footnotesize,       % the size of the fonts that are used for the code
+  numbers=left,                   % where to put the line-numbers
+  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
+  stepnumber=1,                   % the step between two line-numbers. If it's 1, each line will be numbered
+  backgroundcolor=\color{backgroundColour},   
+  commentstyle=\color{codegreen},
+  keywordstyle=\color{blue},
+  numberstyle=\tiny\color{codegray},
+  stringstyle=\color{codepurple},
+  basicstyle=\ttfamily\footnotesize,
+  breakatwhitespace=false,         
+  breaklines=true,                 
+  captionpos=b,                    
+  keepspaces=true,                 
+  showspaces=false,                
+  showstringspaces=false,
+  showtabs=false,                  
+  tabsize=2
+}
+
+\begin{document}
+\begin{titlepage}
+%\SetWatermarkText{\includegraphics[width = 0.97\paperwidth,
+%height = 0.97\paperheight]{bia.png}}
+%\SetWatermarkAngle{0} 
+%\SetWatermarkText{\includegraphics[scale=1]{hust.png}}
+%\SetWatermarkAngle{0} 
+\begin{tikzpicture}[remember picture,overlay,inner sep=0,outer sep=0]
+     \draw[blue!70!black,line width=4pt] ([xshift=-1.5cm,yshift=-2cm]current page.north east) coordinate (A)--([xshift=1.5cm,yshift=-2cm]current page.north west) coordinate(B)--([xshift=1.5cm,yshift=2cm]current page.south west) coordinate (C)--([xshift=-1.5cm,yshift=2cm]current page.south east) coordinate(D)--cycle;
+
+     \draw ([yshift=0.5cm,xshift=-0.5cm]A)-- ([yshift=0.5cm,xshift=0.5cm]B)--
+     ([yshift=-0.5cm,xshift=0.5cm]B) --([yshift=-0.5cm,xshift=-0.5cm]B)--([yshift=0.5cm,xshift=-0.5cm]C)--([yshift=0.5cm,xshift=0.5cm]C)--([yshift=-0.5cm,xshift=0.5cm]C)-- ([yshift=-0.5cm,xshift=-0.5cm]D)--([yshift=0.5cm,xshift=-0.5cm]D)--([yshift=0.5cm,xshift=0.5cm]D)--([yshift=-0.5cm,xshift=0.5cm]A)--([yshift=-0.5cm,xshift=-0.5cm]A)--([yshift=0.5cm,xshift=-0.5cm]A);
+
+
+     \draw ([yshift=-0.3cm,xshift=0.3cm]A)-- ([yshift=-0.3cm,xshift=-0.3cm]B)--
+     ([yshift=0.3cm,xshift=-0.3cm]B) --([yshift=0.3cm,xshift=0.3cm]B)--([yshift=-0.3cm,xshift=0.3cm]C)--([yshift=-0.3cm,xshift=-0.3cm]C)--([yshift=0.3cm,xshift=-0.3cm]C)-- ([yshift=0.3cm,xshift=0.3cm]D)--([yshift=-0.3cm,xshift=0.3cm]D)--([yshift=-0.3cm,xshift=-0.3cm]D)--([yshift=0.3cm,xshift=-0.3cm]A)--([yshift=0.3cm,xshift=0.3cm]A)--([yshift=-0.3cm,xshift=0.3cm]A);
+
+   \end{tikzpicture}
+\begin{center}
+    \vspace{7pt}
+    \textbf{ĐẠI HỌC QUỐC GIA THÀNH PHỐ HỒ CHÍ MINH}
+    
+    \vspace{7pt}
+    \textbf{TRƯỜNG ĐẠI HỌC BÁCH KHOA}
+
+    \vspace{7pt}
+    \textbf{KHOA ĐIỆN - ĐIỆN TỬ}
+\end{center}
+\vspace{10pt}
+\begin{center}
+    \includegraphics[scale=0.3]{HCMUT.png}
+    
+    \vspace{10pt}
+    \fontsize{18pt}{17pt}\selectfont 
+    \textbf{BÁO CÁO BÀI TẬP LỚN} 
+    
+    \vspace{7pt}
+    \textbf{XÁC SUẤT THỐNG KÊ}
+\end{center}
+
+\begin{center}
+    \fontsize{16pt}{17pt}\selectfont 
+    \textbf{\textrm{ĐỀ TÀI 11:}}
+    \vspace{10pt}
+    \\
+    \textbf{\textrm{Phân tích và dự đoán tổng chi phí đặt hàng }}\\
+    \textbf{\textrm{của một cửa hàng điện tử trực tuyến ở Úc}}
+\end{center}
+
+
+
+\begin{center}
+    \vspace{10pt}
+\textbf{GVHD: TS. Phan Thị Hường}
+\end{center}
+
+\begin{center}
+\vspace{10pt}
+\textbf{Nhóm 6 - Lớp: L09}
+\end{center}
+
+\vspace{10pt}
+
+\vfill
+\centerline{\bf Thành phố Hồ Chí Minh - 2024}
+
+\vspace{1cm}
+\end{titlepage}
+\newpage
+\part*{Bảng phân chia công việc}
+\addcontentsline{toc}{part}{Bảng phân chia công việc}
+
+\begin{table}[H]
+    \centering
+    \fontsize{12}{0pt}\selectfont
+    \begin{tabular}{||>{\centering\arraybackslash}m{4cm}|>{\centering\arraybackslash}m{2cm}||>{\centering\arraybackslash}m{6cm}||>{\centering\arraybackslash}m{3cm}||}
+    \hline
+    \hline
+    Họ và tên & MSSV & Mô tả đóng góp & Chú thích\\    \hline
+    \hline
+       Vương Gia Khiêm  & 2311571&Latex, Thống kê suy diễn, Tiền xử lý số liệu& +0.5 \\
+       \hline
+       Vũ Nhật Huy	& 2311267&Latex, Thống kê suy diễn, Tiền xử lý số liệu& +0.5\\
+       \hline
+Nguyễn Minh Kha	& 2311394&Tổng quan dữ liệu & -2\\
+\hline Hà Tuấn Khanh	&2311490&Kiến thức nền, Tài liệu tham khảo & +0.25\\
+\hline Đỗ Hoàng Thiên Ân	&2310175&Thống kê mô tả& +0.5\\
+\hline Bùi Thị Quỳnh Anh	&2310057&Thống kê mô tả& +0.25\\
+\hline
+    \end{tabular}
+    \label{Danh sách sinh viên tham gia}
+\end{table}
+\thispagestyle{empty}
+
+ \newpage
+
+\onehalfspacing
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\fancyhead{}
+\renewcommand{\footruleskip}{10pt}
+\renewcommand{\footrulewidth}{1pt}
+\renewcommand{\headrulewidth}{1pt}
+\fancyfoot{}
+\fancyhead[RO]{\textbf{Bài tập lớn Xác suất thống kê}}
+\fancyhead[LE]{\textbf{GVHD: TS. Phan Thị Hường}}
+\fancyfoot[LE,RO]{\textbf{Trang \thepage}}
+\newpage
+\import{CHAPTERS}{intro.tex}
+
+\import{CHAPTERS}{chap1.tex}
+
+\import{CHAPTERS}{chap2.tex}
+
+\import{CHAPTERS}{chap3.tex}
+
+\import{CHAPTERS}{chap4.tex}
+
+\import{CHAPTERS}{chap5.tex}
+
+\import{CHAPTERS}{chap6.tex}
+\newpage
+\import{CHAPTERS}{source.tex}
+\newpage
+\import{CHAPTERS}{references.tex}
+\end{document}

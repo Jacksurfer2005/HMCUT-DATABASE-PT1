@@ -1,0 +1,25 @@
+\section{Thảo luận}
+Từ việc xây dựng mô hình Anova và hồi quy đa biến, ta rút được 2 kết luận:
+\begin{itemize} 
+    \setlength{\itemsep}{0pt}
+
+    \item 
+Giữa các mùa (season) trong năm không có sự khác biệt với tổng chi phí đặt hàng (order\_total).
+    \item 
+ Tổng chi phí đặt hàng (order\_total) bị ảnh hưởng bởi 2 yếu tố chính là chi phi của đơn hàng (order\_price) và mã giảm giá (coupon\_discount).
+\end{itemize}
+Ngoài ra, ta có thể rút ra được ưu điểm và nhược điểm từ việc xây dựng hai mô hình:
+
+\textbf{Hồi quy đa biến}:
+\begin{itemize}
+    \item \textbf{Ưu điểm}: Hồi quy đa biến đơn giản, dễ hiểu, có thể kiểm tra ảnh hưởng của nhiều yếu tố và dự đoán tốt nếu mối quan hệ giữa các biến là tuyến tính.
+    \item \textbf{Nhược điểm}: Giả định tuyến tính, dễ bị ảnh hưởng bởi đa cộng tuyến, dữ liệu ngoại lai, và không thể xử lý mối quan hệ phức tạp hoặc phi tuyến.
+\end{itemize}
+
+\textbf{Anova}:
+\begin{itemize}
+    \item \textbf{Ưu điểm}: Anova là một công cụ mạnh mẽ để so sánh sự khác biệt giữa nhiều nhóm, đồng thời kiểm tra sự tương tác giữa các yếu tố. Nó giúp giảm số lượng phép kiểm tra và mang lại kết quả chính xác nếu các giả định được đáp ứng.
+    \item  \textbf{Nhược điểm}: Anova yêu cầu dữ liệu có phân phối chuẩn và phương sai đồng nhất. Ngoài ra, Anova chỉ cho biết có sự khác biệt hay không giữa các nhóm, mà không xác định nhóm nào khác biệt so với nhóm nào, và cũng không đưa ra mức độ khác biệt.
+    
+\end{itemize}
+

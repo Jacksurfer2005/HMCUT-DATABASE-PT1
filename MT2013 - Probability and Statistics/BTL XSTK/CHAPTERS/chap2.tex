@@ -1,0 +1,335 @@
+\section{Kiến thức nền}
+\subsection{Thống kê mô tả và thống kê suy diễn}
+\subsubsection{Thống kê mô tả (Descriptive statistics)} 
+Thống kê mô tả là quá trình mà ta:
+\begin{itemize}
+    \item Thu thập dữ liệu: Xác định mục tiêu nghiên cứu và thu thập thông tin tương ứng.
+    \item Tổng hợp và xử lý dữ liệu: tính các tham số mẫu như trung bình mẫu (sample mean), phương sai mẫu (sample variance), trung vị (median),...
+    \item Phân tích phân phối: phân tích hình dáng phân phối, các điểm ngoại lai và đánh giá mức độ phân tán của dữ liệu.
+\end{itemize}
+\subsubsection{Thống kê suy diễn (Inferential statistics)}
+Ta xử lý các thông tin có được từ thống kê mô tả, từ đó đưa ra các cơ sở cho những dự đoán (predictions), dự báo (forecasts) và các ước lượng (estimations).
+\begin{itemize}
+    \item Ước lượng: tham số thống kê (trung bình, tỷ lệ, phương sai).
+    \item Kiểm định giả thuyết: tham số thống kê (trung bình, tỷ lệ, phương sai), quy luật phân phối xác suất (chuẩn, poisson,...), tính độc lập,...
+\end{itemize}
+\subsection{Biểu đồ thống kê}
+
+Biểu đồ thống kê là công cụ trực quan giúp ta hiển thị và mô tả các đặc trưng cơ bản của dữ liệu như trung bình cộng, độ lệch chuẩn, giá trị lớn nhất, giá trị nhỏ nhất:
+
+\begin{itemize} \item \textbf{Biểu đồ Histogram}: Phân tích sự phân bố tần số, thể hiện trực quan tính đối xứng của dữ liệu, phân tích về sự thay đổi theo thời gian. \item \textbf{Biểu đồ Boxplot}: Thể hiện 5 vị trí phân bố của dữ liệu gồm giá trị nhỏ nhất, tứ phân vị thứ nhất (Q1), trung vị (median), tứ phân vị thứ ba (Q3), và giá trị lớn nhất. Biểu đồ này giúp ta nhận diện sự phân tán và các điểm ngoại lai. \item \textbf{Biểu đồ Tán xạ}: Dùng để tìm hiểu mối quan hệ giữa hai biến dữ liệu, đặc biệt là trong việc xác định xu hướng và mức độ tương quan giữa chúng. \item \textbf{Ma trận tương quan}: Đo lường mối liên hệ giữa hai biến thông qua hệ số tương quan (r). Hệ số tương quan có giá trị từ -1 đến 1, giúp xác định mức độ mạnh yếu và hướng của mối quan hệ giữa các biến. \end{itemize}
+\subsection{Hồi quy tuyến tính bội}
+Mô hình hồi quy tuyến tính bộ có dạng tổng quát như sau:\
+\begin{center}
+    $Y$ = $\beta_1$+$\beta_2$$X_2$+$\beta_3$$X_3$+...$\beta_k$$X_k$+$u$
+\end{center}
+Trong đó:
+\begin{itemize}
+    \item[+] $Y$: Biến phụ thuộc.
+    \item[+] $X_i$: Biến độc lập.
+    \item[+] $\beta_1$: Hệ số tự do (hệ số chặn).
+    \item[+] $\beta_i$: Hệ số hồi quy riêng.
+\end{itemize}
+
+Như vậy, "Hồi quy tuyến tính" là một phương pháp để ta có thể dự đoán giá trị của biến phụ thuộc ($Y$) dựa trên giá trị của biến độc lập ($X$).
+
+Phân tích hồi quy thường được chúng ta sử dụng trong các hoạt động về khoa học - kỹ thuật, y học, kinh tế - xã hội, ... ta có nhu cầu xác định mối liên giữa hai hay nhiều biến ngẫu nhiên với nhau.
+\textbf{Ví dụ}: Mối liên hệ giữa chiều cao và cỡ giày của một người, từ đó một cửa hàng bán giầy dép có thể xác định chính xác cỡ giầy của một khách hàng khi biết chiều cao…
+\subsubsection{Hàm hồi quy tổng thể (PRF - Population Regression Function)}
+Với $Y$ là biến phụ thuộc $X_2$, $X_3$,...,$X_k$ là biến độc lập, $Y$ là ngẫu nhiên và có một phân phối xác suất nào đó.
+
+Suy ra: Tồn tại $E$($Y$|$X_2$, $X_3$,..., $X_k$) = giá trị xác định.
+
+Do vậy, $F$($X_2$, $X_3$,...,$X_k$) = $E$($Y$|$X_2$, $X_3$,..., $X_k$) là hàm hồi quy tổng thể của Y theo $X_2$, $X_3$,..., $X_k$.
+
+Với một cá thể $i$ tồn tại ($X_2$,$_i$, $X_3,_i$,...,$X_k,_i$,$Y_i$).
+
+Ta có: $Y_i$ $\ne$ $F$ ($X_2$, $X_3$,...,$X_k$) $\Rightarrow$ $u_i$ = $Y_i$ - $F$.
+
+Do vậy: $Y_i$ = $E$($Y$|$X_2$, $X_3$,..., $X_k$) + $u_i$.
+
+Hồi quy tổng thể PRF:
+\begin{itemize}
+    \item $Y$ = $E$($Y$|$X$) = + $U$
+    \item $E$($Y$|$X$) = $F$($X$) 
+\end{itemize}
+\subsubsection{Hàm hồi quy mẫu (SRF - Sample Regression) Function}
+Trong thực tế, hiếm khi chúng ta có được dữ liệu về tổng thể, vì vậy không thể xác định được giá trị trung bình tổng thể của biến phụ thuộc đúng ở mức độ nào. Do vậy cần phải dựa vào dữ liệu mẫu để ước lượng. Trên một mẫu có $n$ cá thể, gọi $\hat{Y} = \hat{F}(X_2, X_3, \ldots, X_k)$ là hồi quy mẫu. Với một cá thể mẫu, $Y_i \ne \hat{F}(X_2, X_3, \ldots, X_k)$ sinh ra 
+$e_i = Y_i - \hat{F}(X_2, X_3, \ldots, X_k)$, với $e_i$ là phần dư SRF. Ta có hàm hồi quy mẫu tổng quát có dạng như sau:
+\begin{equation*}
+\hat{Y}_i = \hat{\beta}_1 + \hat{\beta}_2 x_{2,i} + \hat{\beta}_3 x_{3,i} + \cdots + \hat{\beta}_k x_{k,i}
+\end{equation*}
+\subsubsection{Phương pháp bình phương nhỏ nhất}
+Trong khi xây dựng mô hình hồi quy đa biến ta cần kiểm tra các giả thiết như sau:
+
+\begin{enumerate}
+    \item Hàm hồi quy là tuyến tính theo các tham số.
+    
+    Điều này có nghĩa là quá trình thực hành hồi quy trên thực tế được miêu tả bởi mối quan hệ dưới dạng:
+    \[
+    y = \beta_1 + \beta_2 x_2 + \beta_3 x_3 + \beta_4 x_4 + \cdots + \beta_k x_k + u
+    \]
+    hoặc mối quan hệ thực tế có thể được viết lại ví dụ như dưới dạng lấy loga cả hai vế.
+    
+    \item Kỳ vọng của các yếu tố ngẫu nhiên $u_i$ bằng 0.
+    
+    Trung bình tổng thể sai số là bằng 0. Điều này có nghĩa là có một số giá trị sai số mang dấu dương và một số sai số mang dấu âm. Do hàm xem như là đường trung bình nên có thể giả định rằng các sai số ngẫu nhiên trên sẽ bị loại trừ nhau, ở mức trung bình, trong tổng thể.
+\end{enumerate}
+
+\begin{enumerate}
+    \item[3.] Các sai số độc lập với nhau.
+    \item[4.] Các sai số có phương sai bằng nhau.\\
+    Tất cả giá trị $u_i$ được phân phối giống nhau với cùng phương sai $\sigma^2$, sao cho:
+    \[
+    \text{Var}(u_i) = E(u_i^2) = \sigma^2.
+    \]
+    \item[5.] Các sai số có phân phối chuẩn.\\
+    Điều này rất quan trọng khi phát sinh các bài thực hiện kiểm định giả thuyết trong những phạm vi mẫu là nhỏ. Nhưng nếu mẫu là lớn hơn, điều này trở nên không mấy quan trọng.
+\end{enumerate}
+\subsubsection{Độ phù hợp của mô hình}
+Để có thể biết được mô hình giải thích được như thế nào hay xác định độ biến động của các biến phụ thuộc, người ta sử dụng $R^2$
+Ta có: 
+\[
+\sum (y_i - \bar{y})^2 = \sum [(y_i - \hat{y}_i) + (\hat{y}_i - \bar{y})]^2 
+= \sum [e_i + (\hat{y}_i - \bar{y})]^2
+\]
+\[
+= \sum e_i^2 + 2\sum e_i (\hat{y}_i - \bar{y}) + \sum (\hat{y}_i - \bar{y})^2
+\]
+Đặt:
+\begin{itemize}
+    \item TSS = $\sum (y_i - \bar{y})^2$: Tổng bình phương của tất cả các sai lệch giữa các giá trị quan sát $Y_i$ và giá trị trung bình.
+    \item ESS = $\sum (\hat{y}_i - \bar{y})^2$: Tổng bình phương của tất cả các sai lệch giữa các giá trị của biến phụ thuộc $Y$ nhận được từ hàm hồi quy mẫu và các giá trị trung bình của chúng.
+    \item RSS = $\sum e_i^2$: Tổng bình phương của tất cả các sai lệch giữa các giá trị quan sát $Y$ và các giá trị nhận được từ hàm hồi quy.
+\end{itemize}
+Đặt:
+Do $\sum e_i (\hat{y}_i - \bar{y}) = 0$ ($\sum e_i \hat{y}_i = 0$; $\sum e_i \bar{y} = 0$) nên ta viết lại thành:
+\[
+\text{TSS} = \text{ESS} + \text{RSS}
+\]
+
+Khi đó $R^2$ được xác định bởi công thức:
+\[
+R^2 = \frac{\text{ESS}}{\text{TSS}} = 1 - \frac{\text{RSS}}{\text{TSS}} \quad (0 \leq R^2 \leq 1)
+\]
+Từ biểu thức của $R^2$, chúng ta thấy $R^2$ đo tỷ lệ hay số phần trăm của toàn bệ sai lệch $Y$ với giá trị trung bình được giải thích bằng mô hình. Do đó $R^2$ được sử dụng để đo sự phù hợp của hàm hồi quy.
+\begin{itemize}
+    \item Nếu $R^2$ cao nghĩa là mô hình ước lượng giải thích được một mức độ cao biến động của biến phụ thuộc.
+    \item Nếu $R^2$ bằng 0 nghĩa là mô hình không đưa ra được thông tin nào về sự thay đổi của biến phụ thuộc và dự đoán tốt nhất về giá trị của biển phụ thuộc là giá trị trung bình.
+    \item Nếu $R^2$ = 1 nghĩa là 100\% sự thay đổi của biến phụ thuộc được giải thích bởi các biến độc lập trong mô hình.
+\end{itemize}
+\subsubsection{Khoảng tin cậy và kiểm định các hệ số hồi quy}
+\textbf{a. Ước lượng khoảng tin cậy đối với các hệ số hồi quy}\\
+Mục đích của phân tích hồi quy không phải chỉ suy đoán về các hệ số hồi quy riêng $\beta_1$,$\beta_2$,...,$\beta_k$  mà còn kiểm tra bản chất của sự phụ thuộc. Do đó cần phải biết phân bố xác suất của  $\beta_1$,$\beta_2$,...,$\beta_k$. Các phân bố này phụ thuộc vào phân bố của các sai số $u_i$.\\
+Từ các giả thiết của OLS, $u_i$ có phân phối chuẩn $N$(0;$\sigma^2$). Các hệ số ước lượng tuân theo phân phối chuẩn:
+\begin{equation*}
+\hat{\beta}_j \sim N \left( \beta_j, \text{Se}(\hat{\beta}_j) \right)
+\end{equation*}
+\begin{equation*}
+\frac{\hat{\beta}_j - \beta_j}{\text{Se}(\hat{\beta}_j)} \sim T(n - k)
+\end{equation*}
+Ước lượng phương sai sai số dựa vào các phần dư bình phương tối thiểu. Trong đó $k$ là số hệ số trong phương trình hồi quy đa biến:
+\[
+\hat{\sigma}^2 = \frac{\sum e_i^2}{n - k}
+\]
+
++ Ước lượng 2 phía, ta tìm được $\frac{\alpha}{2}$ thỏa mãn:
+\[
+P\left( -t_{\frac{\alpha}{2}} (n - k) \leq \frac{\hat{\beta}_j - \beta_j}{\text{Se}(\hat{\beta}_j)} \leq t_{\frac{\alpha}{2}} (n - k) \right) = 1 - \alpha
+\]
+
++ Khoảng tin cậy $1 - \alpha$ của $\beta_j$ là:
+\[
+\left[ \hat{\beta}_j - t_{\frac{\alpha}{2}} (n - k) \text{Se}(\hat{\beta}_j); \, \hat{\beta}_j + t_{\frac{\alpha}{2}} (n - k) \text{Se}(\hat{\beta}_j) \right]
+\]
+
+\textbf {b. Kiểm định giả thiết đối với $\beta_j$}\\
+Kiểm định ý nghĩa thống kê của các hệ số hồi quy có ý nghĩa hay không tức là kiểm định rằng các biến giải thích có thực sự ảnh hưởng đến biến phụ thuộc hay không. Nói cách khác là hệ số hồi quy có ý nghĩa hay không.\\
+Có thể đưa ra giả thiết nào đó đối với $\beta_j,$ chẳng hạn $\beta_j$ = $\beta_j^*$. Nếu giả thiết đúng thì:
+\[
+T = \frac{\hat{\beta}_j - \beta_j^*}{\text{Se}\left(\hat{\beta}_j\right)} \sim T(n-k)
+\]
+
+Ta có bảng sau:
+
+\begin{table}[h!]
+\centering
+\caption{Bảng tóm tắt giả thuyết và miền bác bỏ tương ứng}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Loại giả thuyết} & \textbf{Giả thuyết $H_0$} & \textbf{Giả thuyết đối $H_1$} & \textbf{Miền bác bỏ} \\ \hline
+Hai phía    & $\beta_1 = \beta_i^*$   & $\beta_i \neq \beta_i^*$   & $|t| > t_{\alpha/2;n-k}$ \\ \hline
+Phía phải  & $\beta_1 \leq \beta_i^*$ & $\beta_i > \beta_i^*$     & $t > t_{\alpha;n-k}$ \\ \hline
+Phía trái  & $\beta_1 \geq \beta_i^*$ & $\beta_1 < \beta_i^*$     & $t < -t_{\alpha;n-k}$ \\ \hline
+\end{tabular}
+\end{table}
+
+Ta có thể sử dụng giá trị P-value: P-value $<$ mức ý nghĩa thì bác bỏ giả thuyết $H_0$.
+
+\textbf{Kiểm định $\beta_j$:}
+
+
+
+\begin{itemize}
+\item Giả thuyết $H_0$: $\beta_j = 0 \Leftrightarrow x_j$ không tác động 
+\item Giả thuyết $H_1$: $\beta_j \neq 0 \Leftrightarrow x_j$ có tác động
+    \item $\beta_j < 0 \Leftrightarrow x_j$ có tác động ngược
+    \item $\beta_j > 0 \Leftrightarrow x_j$ có tác động thuận
+\end{itemize}
+\subsubsection{Kiểm định mức độ ý nghĩa chung của mô hình (Trường hợp đặc biệt của kiểm định WALD)}
+\textbf{a. Khái quát về kiểm định WALD}\\
+Giả sử chúng ta có 2 mô hình dưới đây:
+\[
+(U): Y = \beta_1 + \beta_2 X_2 + \beta_3 X_3 + \beta_4 X_4 + u
+\]
+\[
+(R): Y = \beta_1 + \beta_2 X_2 + v
+\]
+
+Mô hình $U$ được gọi là mô hình không giới hạn (Unrestrict), và mô hình $R$ được gọi là mô hình giới hạn (Restrict). Đó là do $\beta_3$ và $\beta_4$ buộc phải bằng 0 trong mô hình $R$. Ta có thể kiểm định giả thuyết liên kết $\beta_3 = \beta_4 = 0$, với ít nhất một trong những hệ số này không bằng 0. Kiểm định giả thuyết liên kết này được gọi là kiểm định Wald, thủ tục như sau.
+
+Đặt các mô hình giới hạn và không giới hạn là:
+\[
+(U): Y = \beta_1 + \beta_2 X_2 + \dots + \beta_m X_m + \beta_{m+1} X_{m+1} + \dots + \beta_k X_k + u
+\]
+\[
+(R): Y = \beta_1 + \beta_2 X_2 + \dots + \beta_m X_m + v
+\]
+
+Mô hình $(R)$ có được bằng cách bỏ bớt một số biến ở mô hình $(U)$, đó là: $X_{m+1}, X_{m+2}, \dots, X_k$.
+
+\textbf{Giả thuyết:}
+\[
+H_0 : \beta_{m+1} = \dots = \beta_k = 0
+\]
+\[
+H_1 : \text{``Không phải đồng thời các tham số bằng 0''.}
+\]
+
+Lưu ý rằng $(U)$ chứa $k$ hệ số hồi quy chưa biết và $(R)$ chứa $m$ hệ số hồi quy chưa biết. Do đó, mô hình $R$ có ít hơn $(k - m)$ thông số so với $U$. Câu hỏi chúng ta nêu ra là $(k - m)$ biến bị loại ra có ảnh hưởng liên kết có ý nghĩa đối với $Y$ hay không.
+
+Trị thống kê kiểm định đối với giả thiết này là:
+\[
+F_c = \frac{\left[ RSS_R - RSS_U \right]/(k-m)}{RSS_U/(n-k)} \sim F(\alpha, k-m, n-k)
+\]
+Hoặc:
+\[
+F_c = \frac{R^2_U - R^2_R}{(k-m)} \Big/ \frac{1 - R^2_U}{(n-k)}
+\]
+
+Với $R^2$ là độ đo thích hợp không hiệu chỉnh. Với giả thuyết không, $F_c$ có phân phối $F$ với $(k-m)$ bậc tự do đối với tử số và $(n-k)$ bậc tự do đối với mẫu số.
+
+\textbf{Bác bỏ giả thuyết $H_0$ khi:}
+\[
+F_c > F(\alpha, k-m, n-k)
+\]
+Hoặc giá trị p-value của thống kê $F_c$ nhỏ hơn mức ý nghĩa cho trước.
+
+\textbf{b. Kiểm định ý nghĩa của mô hình.}\\
+Trong mô hình hồi quy đa biến, giả thuyết ``không'' cho rằng mô hình không có ý nghĩa được hiểu là tất cả các hệ số hồi quy riêng đều bằng 0.
+
+Ứng dụng kiểm định Wald (thường được gọi là kiểm định F) được tiến hành cụ thể như sau:
+
+\textbf{Bước 1:} Giả thuyết $H_0: \beta_2 = \beta_3 = \dots = \beta_k = 0$. \\
+Giả thuyết $H_1$: ``Có ít nhất một trong những giá trị $\beta$ khác không''.
+
+\textbf{Bước 2:} Trước tiên hồi quy $Y$ theo một số hạng không đổi và $X_2, X_3, \dots, X_k$, sau đó tính tổng bình phương sai số $RSS_U$, $RSS_R$. Phân phối $F$ là tỷ số của hai biến ngẫu nhiên phân phối khi bình phương độc lập. Điều này cho ta trị thống kê:
+\[
+F_c = \frac{\left[ RSS_R - RSS_U \right]/(k-m)}{RSS_U/(n-k)} \sim F(\alpha, k-m, n-k)
+\]
+
+Vì $H_0 : \beta_2 = \beta_3 = \dots = \beta_k = 0$, nhận thấy rằng trị thống kê kiểm định đối với giả thuyết này sẽ là:
+\begin{equation*}
+    F_c = \frac{ESS/(k-1)}{RSS/(n-k)} \sim F(\alpha, k-1, n-k)
+\end{equation*}
+
+\textbf{Bước 3:} Tra số liệu trong bảng $F$ tương ứng với bậc tự do $(k-1)$ cho tử số và $(n-k)$ cho mẫu số, với mức ý nghĩa $\alpha$ cho trước.
+
+\textbf{Bước 4:} Bác bỏ giả thuyết $H_0$ nếu $F_c > F(\alpha, k-1, n-k)$. \\
+Đối với phương pháp giá trị p-value, giả thuyết $H_0$ bị bác bỏ nếu $P(F > F_c \mid H_0) < \alpha$, hoặc nói cách khác nếu giá trị p nhỏ hơn mức ý nghĩa.
+\subsection{Phân tích phương sai một yếu tố}
+\subsubsection{Lí thuyết về ANOVA (Phân tích phương sai)}
+Mục tiêu của phân tích phương sai (Analysis of Variance - ANOVA) là so sánh trung bình của nhiều nhóm (tổng thể) dựa trên các trị trung bình của các mẫu quan sát từ các nhóm này và thông qua kiểm định giả thuyết của kết luận về sự bằng nhau của các trung bình tổng thể này.
+
+Ta có các mô hình phân tích phương sai: phân tích phương sai một yếu tố và hai yếu tố. Cụm từ yếu tố ở đây ám chỉ số lượng yếu tố nguyên nhân ảnh hưởng đến yếu tố kết quả đang nghiên cứu.
+\subsubsection{Phân tích phương sai một yếu tố}
+Phân tích phương sai một yếu tố là phân tích ảnh hưởng của một yếu tố nguyên nhân (dạng biến định tính) đến một yếu tố kết quả (dạng biến định lượng) đang nghiên cứu.\\
+Giả sử cần so sánh số trung bình của k tổng thể độc lập trên những mẫu ngẫu nhiên và độc lập $n_1$,$n_2$,...,$n_k$ quan sát từ k tổng thể này. Cần ghi nhớ ba giả định sau đây để được tiến hành phân tích Anova:
+\begin{itemize}
+    \item Các tổng thể này có phân phối chuẩn.
+    \item Các phương sai của tổng thể bằng nhau.
+    \item Các quan sát được lấy mẫu là độc lập
+\end{itemize}
+
+Nếu trung bình của các tổng thể được ký hiệu là $\mu_1 = \mu_2 = \dots = \mu_k$ thì khi các giả định trên được đáp ứng, mô hình phân tích phương sai một yếu tố ảnh hưởng được mô tả dưới dạng kiểm định giả thuyết như sau:
+\[
+H_0: \mu_1 = \mu_2 = \dots = \mu_k
+\]
+Và giả thuyết đối là:
+\[
+H_1: \text{Tồn tại ít nhất một cặp trung bình tổng thể khác nhau.}
+\]
+
+Các bước thực hiện:
+
+\textbf{Bước 1:} Tính trung bình mẫu của các nhóm $\bar{x}_1, \bar{x}_2, \dots, \bar{x}_k$ theo công thức:
+\[
+\bar{x}_i = \frac{\sum_{j=1}^{n_i} x_{ij}}{n_i}, \quad (i = 1, 2, \dots, k)
+\]
+Trung bình chung của $k$ mẫu được tính theo công thức:
+\[
+\bar{x} = \frac{\sum_{i=1}^k n_i \bar{x}_i}{\sum_{i=1}^k n_i}, \quad (i = 1, 2, \dots, k)
+\]
+
+\textbf{Bước 2:} Tính tổng các chênh lệch bình phương (tổng bình phương):
+
+\begin{itemize}
+    \item \textbf{Tổng các độ lệch bình phương trong nội bộ nhóm (SSW):}
+    \[
+    SSW = \sum_{i=1}^k \sum_{j=1}^{n_i} (x_{ij} - \bar{x}_i)^2
+    \]
+
+    \item \textbf{Tổng các độ lệch bình phương giữa các nhóm (SSB):}
+    \[
+    SSB = \sum_{i=1}^k n_i (\bar{x}_i - \bar{x})^2
+    \]
+
+    \item \textbf{Tổng các độ lệch bình phương của toàn bộ tổng thể (SST):}
+    \[
+    SST = SSW + SSB = \sum_{i=1}^k \sum_{j=1}^{n_i} (x_{ij} - \bar{x})^2
+    \]
+\end{itemize}
+
+\textbf{Bước 3:} Tính các phương sai:
+ \textbf{Bước 3:} Tính các phương sai:
+\[
+MSW = \frac{SSW}{n-k} \quad \text{và} \quad MSB = \frac{SSB}{k-1}
+\]
+
+\textbf{Bước 4:} Tính thống kê kiểm định:
+\[
+F = \frac{MSB}{MSW}
+\]
+
+\textbf{Bước 5:} Xác định miền bác bỏ của bài toán:
+\[
+RR = \left(F_{\alpha; k-1; N-k}, +\infty\right)
+\]
+Tìm giá trị $F_{\alpha; k-1; N-k}$: tra bảng Fisher mức ý nghĩa $\alpha$ ở cột $k-1$ và dòng $N-k$.
+
+\textbf{Bước 6:} Đưa ra kết luận:
+\begin{itemize}
+    \item Nếu $F > F_{\alpha; k-1; N-k} \iff F \in RR \implies$ Bác bỏ $H_0$, chấp nhận $H_1$.
+    \item Nếu $F < F_{\alpha; k-1; N-k} \iff F \notin RR \implies$ Không bác bỏ $H_0$ (chưa bác bỏ được $H_0$, chấp nhận $H_0$).
+\end{itemize}
+\begin{table}[h!]
+\centering
+\caption{Bảng mô hình phân tích phương sai một nhân tố:}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Nguồn biến thiên} & \textbf{SS}  & \textbf{df}  & \textbf{MS}  & \textbf{F} \\ \hline
+Giữa các nhóm             & SSB          & \(k - 1\)    & \(MSB\)      & \(F = \frac{MSB}{MSW}\) \\ \hline
+Trong nội bộ nhóm         & SSW          & \(n - k\)    & \(MSW\)      &\(F = \frac{MSB}{MSW}\) \\ \hline
+Toàn bộ                  & SST          & \(n - 1\)    &              &\(F = \frac{MSB}{MSW}\) \\ \hline
+\end{tabular}
+\end{table}

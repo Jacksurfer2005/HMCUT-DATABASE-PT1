@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {I}Lời nói đầu}{2}{section.1}%
+\contentsline {section}{\numberline {II}Cơ sở lý thuyết}{3}{section.2}%
+\contentsline {subsection}{\numberline {1}Định nghĩa}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2}Tích phân bội ba trong tọa độ trụ}{3}{subsection.2.2}%
+\contentsline {subsection}{\numberline {3}Tích phân bội ba trong tọa độ cầu}{3}{subsection.2.3}%
+\contentsline {section}{\numberline {III}Câu 1}{5}{section.3}%
+\contentsline {subsection}{\numberline {1}Khối $\Omega _1$}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {2}Khối $\Omega _2$}{6}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3}Khối $\Omega _3$}{8}{subsection.3.3}%
+\contentsline {section}{\numberline {IV}Câu 2}{9}{section.4}%
+\contentsline {section}{\numberline {V}Kết luận}{11}{section.5}%

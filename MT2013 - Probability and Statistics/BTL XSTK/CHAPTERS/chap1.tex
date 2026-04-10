@@ -1,0 +1,81 @@
+\section{Tổng quan dữ liệu}
+Dữ liệu này chứa thông tin về một cửa hàng điện tử trực tuyến. Cửa hàng có ba kho hàng dùng để giao hàng. (CHỈNH LẠI CÂU MỞ ĐẦU NÀY)
+
+\begin{table}[h!]
+\centering
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{|l|c|l|l|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Tên biến}} & \textbf{Đơn vị} & \multicolumn{1}{c|}{\textbf{Loại biến}} & \multicolumn{1}{c|}{\textbf{Mô tả}} \\ \hline
+\texttt{order\_id} & ORDxxxxxx & Biến phân loại & ID của mỗi đơn hàng \\ \hline
+\texttt{customer\_id} & IDzzzzzzzzzz & Biến phân loại & ID của mỗi khách hàng \\ \hline
+\texttt{Date} & YYY-MM-DD & Biến phân loại & Thời gian đặt hàng \\ \hline
+\texttt{shopping\_cart} & - & Biến phân loại & Dữ liệu đại diện cho các mục đặt hàng \\ \hline
+\texttt{nereast\_warehouse} & - & Biến phân loại & Cửa hàng gần với khách hàng nhất \\ \hline
+\texttt{order\_price} & USD & Biến liên tục & Giá đơn hàng ban đầu \\ \hline
+\texttt{order\_total} & USD & Biến liên tục & Tổng chi phí đặt hàng đã bao gồm phí vận chuyển và các giảm giá \\ \hline
+\texttt{season} & - & \multicolumn{1}{c|}{-} & Mùa và đơn hàng được đặt \\ \hline
+\texttt{delivery\_charges} & USD & Biến liên tục & Chi phí vận chuyển \\ \hline
+\texttt{customer\_lat} & - & Biến liên tục & Vĩ độ vị trí của khách hàng \\ \hline
+\texttt{customer\_long} & - & Biến liên tục & Kinh độ vị trí của khách hàng \\ \hline
+\texttt{is\_expedited\_delivery} & - & Biến phân loại & Khách hàng có hay không yêu cầu giao hàng nhanh \\ \hline
+\texttt{distance\_to\_nearest\_warehouse} & km & \multicolumn{1}{c|}{-} & Khoảng cách đến kho hàng gần nhất \\ \hline
+\texttt{coupon\_discount} & percent & Biến liên tục & Phần trăm giảm giá được áp dụng vào \texttt{order\_price} \\ \hline
+\texttt{is\_happy\_customer} & - & Biến phân loại & Mức độ hài lòng của khách hàng \\ \hline
+latest\_customer\_review & - & Biến phân loại & Đánh giá mới nhất của khách hàng \\ \hline
+\end{tabular}%
+}
+\end{table}
+\begin{comment}
+
+\begin{table}[H]
+\fontsize{9.5pt}{0pt}\selectfont
+\centering
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Tên biến}                & \textbf{Đơn vị} & \textbf{Ghi chú}      \\\hline
+\texttt{order\_id}  &ORDxxxxxx&ID của mỗi đơn hàng
+\\\hline
+\texttt{customer\_id} &IDzzzzzzzzzz& ID của mỗi khách hàng
+\\\hline
+\texttt{Date} &YYY-MM-DD& Thời gian đặt hàng
+\\\hline
+\texttt{shopping\_cart}&-&Dữ liệu đại diện cho các mục đặt hàng
+\\\hline
+\texttt{nereast\_warehouse}&-&Cửa hàng gần với khách hàng nhất
+
+\\ \hline
+\texttt{order\_price} &USD&Giá đơn hàng ban đầu
+
+\\\hline
+\texttt{order\_total}            & USD             & Tổng chi phí đặt hàng đã bao gồm phí vận chuyển và các giảm giá                        \\ \hline
+\texttt{season}                  & -               & Mùa và đơn hàng được đặt                                                                \\ \hline
+\texttt{delivery\_charges}       & USD             & Chi phí vận chuyển                                                                      \\ \hline
+\texttt{customer\_lat}           & -               & Vĩ độ vị trí của khách hàng                                                            \\ \hline
+\texttt{customer\_long}          & -               & Kinh độ vị trí của khách hàng                                                          \\ \hline
+\texttt{is\_expedited\_delivery} & -               & Khách hàng có hay không yêu cầu giao hàng nhanh                                       \\ \hline
+\texttt{distance\_to\_nearest\_warehouse} & km     & Khoảng cách đến kho hàng gần nhất                                                     \\ \hline
+\texttt{coupon\_discount}        & percent           & Phần trăm giảm giá được áp dụng vào \texttt{order\_price}                              \\ \hline
+\texttt{is\_happy\_customer}    &-&Mức độ hài lòng của khách hàng
+\\\hline
+\texttt{latest\_customer\_review} &-&Đánh giá mới nhất của khách hàng
+\\\hline
+\end{tabular}
+\caption{Thông tin các biến trong dữ liệu.}
+\label{table:variables}
+\end{table}
+\begin{itemize}
+  
+
+   \item \textbf{Các biến phân loại}: order\_id, customer\_id, date, nearest\_warehouse, shopping\_cart, is\_expedited\_delivery, latest\_customer\_review, is\_happy\_customer.
+   \item \textbf{Các biến liên tục}: order\_price, delivery\_charges, customer\_lat, customer\_long, coupon\_discount, order\_total.
+\end{itemize}
+    
+\end{comment}
+\hspace{1cm}\textbf{Mục tiêu phân tích}:
+\begin{itemize}
+
+    \item So sánh tổng chi phí đặt hàng ở các mùa.
+    \item Thực hiện dự báo tổng chi phí đặt hàng phụ thuộc vào những biến nào.
+\end{itemize}
+
